@@ -53,10 +53,10 @@ $ sudo pip3 install gym
 ここでは、いろんなゲームを紹介したいので拡張機能も含めてインストールしていきます。  
 
 ```
-sudo apt install cmake
-sudo apt install zlib1g-dev
-sudo pip3 install gym[all]
-sudo pip3 install gym-retro
+$ sudo apt install cmake
+$ sudo apt install zlib1g-dev
+$ sudo pip3 install gym[all]
+$ sudo pip3 install gym-retro
 ```
 
 ここまでで、とりあえず環境構築は完了しているはずです！
@@ -75,7 +75,7 @@ envids = [print(spec.id) for spec in envs.registry.all()]
 [このページ](https://github.com/openai/gym/wiki/Table-of-environments)にgymのすべての情報が載ってます。  
 また、サンプル動画のリストは[このページ](https://gym.openai.com/envs/#algorithmic)にも載っています・
 
-'''
+```
 Copy-v0
 RepeatCopy-v0
 ReversedAddition-v0
@@ -89,7 +89,7 @@ CubeCrash-v0
 CubeCrashSparse-v0
 CubeCrashScreenBecomesBlack-v0
 MemorizeDigits-v0
-'''
+```
 
 では、実際にPython3で簡単なコードを書いてゲームを起動したりしてみます！  
 
