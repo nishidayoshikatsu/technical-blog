@@ -1,6 +1,6 @@
 # はじめに
 
-このシリーズでは、[OpenAIGym](https://gym.openai.com/)という「強化学習のアルゴリズム開発のためのツールキット」を使って強化学習の実装をしていきます。  
+この記事では、[OpenAIGym](https://gym.openai.com/)という「強化学習のアルゴリズム開発のためのツールキット」を使って強化学習の実装をしていきます。  
 この記事では最初の環境構築と、簡単にゲームを実行してみます。  
 (要はOpenAIGymの環境構築とHelloWorld(?)記事です！)
 
@@ -9,7 +9,7 @@
 1. OpenAIGymの環境構築
 2. 実際にいろんなゲームを実行してみよう！
 
-ってなかんじで書いていきますよ！！
+ってなかんじで書いていきます！！
 
 # OpenAIGymとは
 
@@ -19,11 +19,12 @@ OpenAIGymにはさまざまな強化学習の課題が収録されていて、�
 # 前提環境
 
 * Ubuntu 18.04.2 LTS
-* Python3.6.7以降(3.6.7のみで動作確認済み)
+* Python3.6.7以降(3.6.7, 3.7.3, 3.8.0で動作確認済み)
 
 # 1. OpenAIGymの環境構築
 
-まずは、以下のコマンドを実行してください。  
+まずは、OpenAIGymの環境構築を行います。  
+以下のコマンドを実行してください。  
 
 ```
 $ sudo apt install python3-tk
@@ -32,14 +33,15 @@ $ sudo pip3 install --upgrade pip
 $ sudo pip3 install matplotlib
 ```
 
-ちょっとだけ解説すると、
+少し解説すると、
 
 ```
 $ sudo apt install python3-tk
 ```
 
 ではtkinterというローカルのGUIアプリを構築するためのツールキットをインストールします。  
-OpneAIGymではこのようにGUIの画面を表示してゲームを実行するので、tkinterが必要になります。  
+
+OpneAIGymでは以下のようにGUIの画面を表示してゲームを実行するので、tkinterが必要になります。  
 ※ちなみにこれは後ほど説明するCartPoleというゲームです。  
 ![sample1.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/289151/317a688b-0e84-9f16-1788-8ef7899aeb75.gif)
 
@@ -51,12 +53,20 @@ $ sudo pip3 install gym
 
 また、いろんなゲームをプレイできるようにするには拡張機能も入れる必要があります。
 ここでは、いろんなゲームを紹介したいので拡張機能も含めてインストールしていきます。  
+ここでは、[Gym Retro](https://retro.readthedocs.io/en/latest/)と呼ばれるファミコン、ゲームボーイなどのレトロゲームをOpenAIGymに対応した環境で使えるようにするライブラリを追加します。  
 
 ```
 $ sudo apt install cmake
 $ sudo apt install zlib1g-dev
 $ sudo pip3 install gym[all]
 $ sudo pip3 install gym-retro
+```
+
+最後に、マリオをgymの環境で動かすための環境構築をします。
+
+```
+sudo apt-get install fceux
+sudo pip3 install ppaquette_gym_super_mario
 ```
 
 ここまでで、とりあえず環境構築は完了しているはずです！
@@ -125,14 +135,13 @@ CartPoleでは0, 1の値で行動を決定します。
 |-41.8deg|41.8deg|Pole Angle(ポール角度)|
 |-Inf|Inf|Pole Velocity At Tip(ポールの先端速度)|
 
-プログラムは、以下のようになります。　　
+プログラムは、以下のようになります。  
 説明はコメント文に書いてあります。  
 
 ```python:cartpole-v0-sample.py
 import gym
 
 env = gym.make("CartPole-v0")                           # GUI環境の開始(***)
-observation = env.reset()                               # 環境の初期化
 
 for episode in range(20):
   observation = env.reset()                             # 環境の初期化
@@ -192,7 +201,6 @@ MountainCarでは0, 1, 2の値で行動を決定します。
 import gym
 
 env = gym.make("MountainCar-v0")                        # GUI環境の開始(***)
-observation = env.reset()                               # 環境の初期化
 
 for episode in range(20):
   observation = env.reset()                             # 環境の初期化
@@ -228,7 +236,6 @@ MsPacmanは、あの有名なPacmanのゲームです。
 import gym
 
 env = gym.make("MsPacman-v0")                           # GUI環境の開始(***)
-observation = env.reset()                               # 環境の初期化
 
 for episode in range(20):
   observation = env.reset()                             # 環境の初期化
@@ -289,7 +296,6 @@ Pendulumではトルクを任意に指定して行動を決定します。
 import gym
 
 env = gym.make("Pendulum-v0")                           # GUI環境の開始(***)
-observation = env.reset()                               # 環境の初期化
 
 for episode in range(20):
   observation = env.reset()                             # 環境の初期化
@@ -322,7 +328,6 @@ BipedalWalkerHardcoreは、各関節のトルク・速度を調節してうま�
 import gym
 
 env = gym.make("BipedalWalkerHardcore-v2")              # GUI環境の開始(***)
-observation = env.reset()                               # 環境の初期化
 
 for episode in range(20):
   observation = env.reset()                             # 環境の初期化
@@ -355,7 +360,6 @@ CarRacingは、各関節のトルク・速度を調節してうまく障害物�
 import gym
 
 env = gym.make("CarRacing-v0")                          # GUI環境の開始(***)
-observation = env.reset()                               # 環境の初期化
 
 for episode in range(20):
   observation = env.reset()                             # 環境の初期化
@@ -380,7 +384,7 @@ env.close()                                             # GUI環境の終了
 ![sample11.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/289151/0892a5ca-87ac-9cb5-20ae-264b10ccb577.gif)
 
 Breakoutとは、日本語で言うとブロック崩しです。  
-ルールは言うまでもないかもしれないですが、ボールを反射させてブロックを壊し、スコアを「稼いでいくゲームです。  
+ボールを反射させてブロックを壊し、スコアを「稼いでいくゲームです。  
 このゲームの公式ページは[ここ](https://gym.openai.com/envs/Breakout-ram-v0/)で、githubは[ここ](https://github.com/openai/gym/blob/master/gym/envs/atari/atari_env.py)です。  
 
 以下にコードサンプルを載せます。  
@@ -389,7 +393,6 @@ Breakoutとは、日本語で言うとブロック崩しです。
 import gym
 
 env = gym.make("Breakout-ram-v0")                       # GUI環境の開始(***)
-observation = env.reset()                               # 環境の初期化
 
 for episode in range(20):
   observation = env.reset()                             # 環境の初期化
@@ -409,6 +412,90 @@ env.close()                                             # GUI環境の終了
 
 ![sample11.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/289151/5d808505-e6de-701e-4066-52223accb915.png)
 
+## マリオ
+
+OpenAIGyn環境に対応したマリオの環境は、2種類あります。
+[gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros)と[gym-super-mario](https://github.com/ppaquette/gym-super-mario)です。  
+これらの主な違いは、報酬体系です。  
+[gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros)は報酬が「右に進んだら◯点」「左に進んだら◯点」「GameOverになったら◯点」の3種類しか選択することができません。  
+これに対し、[gym-super-mario](https://github.com/ppaquette/gym-super-mario)はより多くの選択肢があります。  
+したがって、この記事では[gym-super-mario](https://github.com/ppaquette/gym-super-mario)を採用していきます。  
+
+環境構築については、この記事の上部で記述したとおりです。
+> ```
+> sudo apt-get install fceux
+> sudo pip3 install ppaquette_gym_super_mario
+> ```
+
+※マリオの環境構築については、何通りかの方法があります。  
+ここでは最も簡単なものを紹介しました。  
+環境構築の方法によって、コードが異なってくるためここで紹介した方法で環境を導入されることをおすすめします。  
+ネットで検索すると、gym-pullを用いてマリオを動かしているものが多く出てきますが、エラーが多発したので諦めました^^;  
+
+![mario-sample.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/289151/c6d2a75b-c234-edc2-fc96-f9a8a6df0057.gif)
+
+以下で、パラメータについて説明していきます。  
+[公式のgithub](https://github.com/ppaquette/gym-super-mario/tree/master/ppaquette_gym_super_mario)はこちらです。  
+
+* Actions(行動)
+
+マリオでは6つの行動を選択することができます。  
+以下のように長さ6のリストの各行動を選択するか(1)しないか(0)を入力します。  
+各行動を同時に行うことができます。  
+
+action = [0, 0, 0, 1, 1, 0]    # [up, left, down, right, A, B]
+
+* Observation(状態)
+
+マリオでは、画像を状態として取ることができます。  
+
+* その他のパラメータ
+
+distance: スタートからの進んだ距離（x軸）  
+life: ライフ。初期状態では3つあり、0になるとGameOver。  
+score: ゲーム内スコア。（報酬ではない）  
+coins: 獲得コイン数。  
+time: 残り時間。0になるとGameOver。  
+player_status: マリオの状態。smallマリオなら0、bigマリオなら1、ファイヤーボールマリオなら2。  
+
+
+以下にコードサンプルをのせます。  
+このコードのactionは、env.action_space.sample()を使用していません。  
+マリオでenv.action_space.sample()をすると毎回[0, 0, 0, 0, 0, 0]を返してしまうためです。  
+これは内部での乱数生成のコードで0.0~1.0の少数を整数型にキャスト（型変換）しているためです。  
+pythonのキャストは、少数を切り捨てにします。  
+したがって、キャスト前の少数に0.5を足すとこの問題は解決するのですが...  
+ソースコードの方を修正するのはめんどうなので、今回はnumpyで配列を生成しました。  
+
+```python:mario-sample.py
+
+import gym
+import ppaquette_gym_super_mario
+import numpy as np
+
+env = gym.make('ppaquette/SuperMarioBros-1-1-v0')
+
+for episode in range(5):
+  observation = env.reset()                             # 環境の初期化
+  for _ in range(100):
+    action = np.random.randint(0, 1+1, 6)				# 行動の決定
+    observation, reward, done, info = env.step(action)  # 行動による次の状態の決定
+    print("=" * 10)
+    print("action=",action)
+    print("observation=",observation)
+    print("reward=",reward)
+    print("done=",done)
+    print("info=",info)
+
+env.close()                                             # GUI環境の終了
+
+```
+
+![mario.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/289151/d1d5a4f3-b801-281e-ec1b-b0641c1680dc.png)
+
+また、マリオは1-1ステージから、8-4ステージまでのすべて（？）を選択することができます。  
+ステージのリストは[ここ](https://github.com/ppaquette/gym-super-mario)にのっているので、いろいろなステージを試してみてください。  
+
 # まとめ
 
 今回は、OpenAIGymを強化学習で攻略しまくるための環境構築を行いました。  
@@ -416,10 +503,14 @@ env.close()                                             # GUI環境の終了
 
 今後は、強化学習の理論(Q学習、マルコフ決定過程、DQNなど)や強化学習の実装に関する記事を書いていきますので、よろしくお願いします！！！
 
-あ、よければ[twitter](https://twitter.com/nsd244)もフォローよろしくお願いします！
+よければ[twitter](https://twitter.com/nsd244)もフォローよろしくお願いします！
 
 # 参考文献
 
 * [OpenAIGym の基本的使い方](https://qiita.com/God_KonaBanana/items/c2cee09bc35cca722f2b)
 * [Q学習でOpen AI GymのPendulum V0を学習した](http://uu64.hatenablog.jp/entry/2018/05/13/233959)
 * [OpenAI Gym 入門](https://qiita.com/ishizakiiii/items/75bc2176a1e0b65bdd16)
+* [Gym Retro入門 / エイリアンソルジャーではじめる強化学習](https://note.com/npaka/n/nf5035928f262)
+* [Reinforce Super Mario Manual](https://wonseokjung.github.io/supermario_manual/)
+* [DQNでスーパーマリオ1-1をクリアする（動作確認編）](https://vigne-cla.com/3-4/)
+* [強化学習でスーパーマリオエージェントを作ってみる](https://oktok.hatenablog.com/entry/2018/08/19/203504)
